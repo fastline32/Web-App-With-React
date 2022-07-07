@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,24 +5,26 @@ using Persistence;
 
 namespace API.Controllers
 {
-    public class ActivitiesController : BaseApiController
+    public class ActivitiesController : BaseAppiController
     {
-        private readonly DataContext _db;
-        public ActivitiesController(DataContext db)
+        private readonly DataContext _context;
+
+        public ActivitiesController(DataContext context)
         {
-            _db = db;
+            _context = context;
         }
+
 
         [HttpGet]
         public async Task<ActionResult<List<Activity>>> GetActivities()
         {
-            return await _db.Activities.ToListAsync();
+            return await _context.Activities.ToListAsync();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Activity>> GetActivity (Guid id)
         {
-            return await _db.Activities.FindAsync(id);
+            return await _context.Activities.FindAsync(id);
         }
     }
 }
